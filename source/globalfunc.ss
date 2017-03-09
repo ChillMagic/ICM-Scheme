@@ -11,7 +11,7 @@
             (prefix (String) String.))
 
     (define gfunc (new))
-    
+
     (define (gfunc-init)
         (insert gfunc `Number.+ Number.f+)
         (insert gfunc `Number.- Number.f-)
