@@ -25,3 +25,10 @@
          (define new make-eq-hashtable)
          (define insert hashtable-set!)
          (define (get hashtable key) (hashtable-ref hashtable key nil)))
+
+(library (List)
+         (export first second third)
+         (import (rnrs))
+         (define (first lst)  (car lst))
+         (define (second lst) (car (cdr lst)))
+         (define (third lst)  (car (cdr (cdr lst)))))
