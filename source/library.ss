@@ -5,19 +5,24 @@
 (load "basic.ss")
 
 (library (Number)
-         (export f+ f- f* f/ f=)
+         (export f+ f- f* f/ =?)
          (import (rnrs))
          (define f+ +)
          (define f- -)
          (define f* *)
          (define f/ /)
-         (define f= =))
+         (define =? =))
 
 (library (String)
-         (export f+ f=)
+         (export f+ =?)
          (import (rnrs))
          (define f+ string-append)
-         (define f= string=?))
+         (define =? string=?))
+
+(library (Symbol)
+         (export =?)
+         (import (rnrs))
+         (define =? symbol=?))
 
 (library (HashTable)
          (export new insert get)

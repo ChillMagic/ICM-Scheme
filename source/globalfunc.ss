@@ -17,6 +17,6 @@
         (insert gfunc `Number.- Number.f-)
         (insert gfunc `Number.* Number.f*)
         (insert gfunc `Number./ Number.f/)
-        (insert gfunc `Number.= Number.f=)
+        (insert gfunc `Number.= Number.=?)
         (insert gfunc `String.+ Number.f+)
-        (insert gfunc `String.= Number.f=)))
+        (insert gfunc `String.= Number.=?)))

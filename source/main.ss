@@ -13,12 +13,10 @@
 ; Main
 
 (import (ICM) (GlobalFunc) (Basic) (ICM-Core)
+  (prefix (Symbol) Symbol.)
   (prefix (List) List.)
 )
 
 (gfunc-init)
 
-(p (call `(Number.+ 5 6)))
-(p (expr-? `(? Fa 5 6)))
-
-(p (if-expr `T` 1 2 3))
+(p (expr-eval `(? T 2 3)))
