@@ -14,3 +14,10 @@ This Project can be run on *Chez Scheme*.
 cd source
 scheme --script repl.ss
 ```
+
+### File Mode :
+
+```
+cd source
+scheme --script run.ss
+```

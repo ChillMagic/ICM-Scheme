@@ -30,7 +30,4 @@
     (let ((f (get gfunc fsym)))
       (if (Symbol.is? f)
         `nil
-        (apply f args)
-      )
-      ))
-    )
+        (apply f args)))))
