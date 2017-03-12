@@ -52,7 +52,7 @@
       (define-struct name (export) (import) exprs ...))))
 
 (define-syntax define-namedstruct
-  (syntax-rules ()
+  (syntax-rules (export import)
   ((_ name (v ...) (export expt ...) (import impt ...) exprs ...)
     (define-struct name
       ; Export & Import

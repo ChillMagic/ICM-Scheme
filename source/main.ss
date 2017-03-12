@@ -12,29 +12,16 @@
 
 ; Main
 
-(import (ICM) (GlobalFunc) (Basic) (ICM-Core)
+(import (ICM) (Basic) (ICM-Core)
+  (prefix (HashTable) HashTable.)
+  (prefix (GlobalFunc) GlobalFunc.)
   (prefix (Symbol) Symbol.)
   (prefix (List) List.)
+  (prefix (Vector) Vector.)
+  (prefix (String) String.)
 )
 
+(define gfunc (HashTable.new))
 
-(gfunc-init)
-
-(p (expr-eval `(? T (? T 5 6) 3)))
-
-(p (expr-eval `(do 5 6)))
-
-(p (vector? '#(1 2 3)))
-
-(define-namedstruct Point (x ...)
-  (export)
-  (import
-    (prefix (Vector) Vector.))
-)
-
-(import (prefix (Point) Point.))
-(import (prefix (Vector) Vector.))
-(import (prefix (Symbol) Symbol.))
-
-(p (Point.new 5 6))
-(p (Point.is? (Point.new 5 6)))
+(GlobalFunc.init gfunc)
+(expr-eval gfunc `(Console.print "Hello World!"))
