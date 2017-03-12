@@ -19,4 +19,6 @@
 
 (gfunc-init)
 
-(p (expr-eval `(? T 2 3)))
+(p (expr-eval `(? T (? T 5 6) 3)))
+
+(p (expr-eval `(do 5 6)))
