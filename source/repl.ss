@@ -14,7 +14,7 @@
 
 (let loop ()
   (print "> ")
-  (let ((code (read)))
+  (let ((code (read-eval-all (load-port-line))))
     (print "=> ")
     (println (expr-eval gfunc code))
     (println "")

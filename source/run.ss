@@ -9,4 +9,4 @@
 ; Main
 
 (define port (open-input-file "../run.chl"))
-(expr-eval gfunc (read port))
+(read-eval-all (load-port-file port))

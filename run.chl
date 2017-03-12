@@ -1,1 +1,6 @@
 (Console.println "Hello World!")
+(Console.println "2")
+
+(defunc add [(a : Int) (b : Int)] -> Int
+  
+)
