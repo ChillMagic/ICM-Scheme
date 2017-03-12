@@ -24,4 +24,3 @@
 (define gfunc (HashTable.new))
 
 (GlobalFunc.init gfunc)
-(expr-eval gfunc `(Console.print "Hello World!"))
