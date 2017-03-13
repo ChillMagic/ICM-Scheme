@@ -26,8 +26,8 @@
     (insert gfunc `Console.println Basic.println)
   )
 
-  (define (call gfunc fsym args)
+  (define (call gfunc fsym args fx)
     (let ((f (get gfunc fsym)))
       (if (Symbol.is? f)
-        `nil
+        (fx fsym)
         (apply f args)))))

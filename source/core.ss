@@ -48,7 +48,7 @@
 
   ; (fexpr <sexpr ...>)
   (define (expr-fcall gfunc code)
-    (GlobalFunc.call gfunc (car code) (cdr code)))
+    (GlobalFunc.call gfunc (car code) (cdr code) (lambda (s) (p "Error to find Identifer '" s "'."))))
 
   ; (do
   ;    <sexpr ...>
@@ -93,39 +93,39 @@
     code
   )
 
-  ; (for V in rexpr
+  ; (for I in rexpr
   ;    sexpr ...
   ; )
   (define (expr-for gfunc code)
     code
   )
 
-  ; (let V vexpr)
+  ; (let I vexpr)
   (define (expr-let gfunc code)
     code
   )
 
-  ; (set V vexpr)
+  ; (set I vexpr)
   (define (expr-set gfunc code)
     code
   )
 
-  ; (cpy <V> vexpr)
+  ; (cpy <I> vexpr)
   (define (expr-cpy gfunc code)
     code
   )
 
-  ; (ref V V2)
+  ; (ref I I2)
   (define (expr-ref gfunc code)
     code
   )
 
-  ; (dim V texpr)
+  ; (dim I texpr)
   (define (expr-dim gfunc code)
     code
   )
 
-  ; (restrict V texpr)
+  ; (restrict I texpr)
   (define (expr-restrict gfunc code)
     code
   )
@@ -135,14 +135,14 @@
     code
   )
 
-  ; (defunc I [<(V <: Type>)>*] <-> Type>
+  ; (defunc I [<(I <: Type>)>*] <-> Type>
   ;   sexpr ...
   ; )
   (define (expr-defunc gfunc code)
     code
   )
 
-  ; (function <I> [<V <: Type>>*] <-> Type>
+  ; (function <I> [<(I <: Type>)>*] <-> Type>
   ;    sexpr ...
   ; )
   (define (expr-function gfunc code)

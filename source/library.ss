@@ -48,8 +48,8 @@
 
 (library (HashTable)
          (export new is? insert get)
-         (import (rnrs) (Basic))
+         (import (rnrs))
          (define new make-eq-hashtable)
          (define is? hashtable?)
          (define insert hashtable-set!)
-         (define (get hashtable key) (hashtable-ref hashtable key nil)))
+         (define (get hashtable key) (hashtable-ref hashtable key `nil)))
