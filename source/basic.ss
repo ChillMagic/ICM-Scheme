@@ -3,21 +3,25 @@
 ; Author : Chill
 
 (library (Basic)
-    (export T F nil print println p do-list)
+    (export T F nil loop-do print println p)
     (import (rnrs))
     (define T `T)
     (define F `F)
     (define nil `nil)
-    (define print display)
-    (define (println x)
-        (begin (display x) (newline)))
-    (define p println)
-    (define (do-list lst func)
-      (let loop ((lst lst))
-        (if (not (null? lst))
+    (define (loop-do func args)
+      (let loop ((lst args))
+        (if (null? lst)
+          args
           (begin
             (func (car lst))
-            (loop (cdr lst)))))))
+            (loop (cdr lst))))))
+    (define (print . x)
+      (loop-do display x))
+    (define (println . x)
+      (apply print x) (newline) x)
+    (define (p . x)
+      (apply println x) `nil)
+)
 
 (define-syntax import-prefix
   (syntax-rules ()

@@ -21,9 +21,9 @@
     (insert gfunc `Number.= Number.=?)
     (insert gfunc `String.+ String.f+)
     (insert gfunc `String.= String.=?)
-    (insert gfunc `Console.p (lambda (x) (Basic.p x) x))
-    (insert gfunc `Console.print (lambda (x) (Basic.print x) x))
-    (insert gfunc `Console.println (lambda (x) (Basic.println x) x))
+    (insert gfunc `Console.p Basic.p)
+    (insert gfunc `Console.print Basic.print)
+    (insert gfunc `Console.println Basic.println)
   )
 
   (define (call gfunc fsym args)
