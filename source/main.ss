@@ -53,3 +53,16 @@
       (if (eof-object? v)
         last
         (loop (expr-eval gfunc v))))))
+
+(p (List.reverse `(5 3 1)))
+
+(import (prefix (Convert) Convert.))
+
+
+(define ConvertTypeMap (HashTable.new))
+
+(p "------------")
+(Convert.!-> ConvertTypeMap `String `Number string->number)
+(p ((Convert.-> ConvertTypeMap `String `Number) "5"))
+
+(p "------------")

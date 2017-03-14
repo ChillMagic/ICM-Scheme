@@ -48,7 +48,8 @@
 
   ; (fexpr <sexpr ...>)
   (define (expr-fcall gfunc code)
-    (GlobalFunc.call gfunc (car code) (cdr code) (lambda (s) (p "Error to find Identifer '" s "'."))))
+    (GlobalFunc.call gfunc (car code) (cdr code)
+      (lambda (s) (println "Error to find Identifer '" s "'."))))
 
   ; (do
   ;    <sexpr ...>
@@ -63,9 +64,9 @@
   (define (expr-? gfunc code)
     (let ((ccdr (cdr code)))
          (if-expr gfunc
-                  (List.first  ccdr)
-                  (List.second ccdr)
-                  (List.third  ccdr)
+                  (car  ccdr)
+                  (cadr ccdr)
+                  (caddr  ccdr)
                   (errors))))
 
   ; (if bexpr0

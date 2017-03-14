@@ -1,3 +1,4 @@
+(Console.println (? T 5 6))
 (Console.println "Hello World!")
 (Console.println "2")
 
