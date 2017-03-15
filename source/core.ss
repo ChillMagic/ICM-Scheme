@@ -46,9 +46,15 @@
               (else              (expr-fcall     gfunc code))))
       code))
 
+  (define (expr-evals gfunc code)
+    (let loop ((lst code) (rlist `()))
+      (if (null? lst)
+	      rlist
+	      (loop (cdr lst) (List.push-back rlist (expr-eval gfunc (car lst)))))))
+
   ; (fexpr <sexpr ...>)
   (define (expr-fcall gfunc code)
-    (GlobalFunc.call gfunc (car code) (cdr code)
+    (GlobalFunc.call gfunc (expr-eval gfunc (car code)) (expr-evals gfunc (cdr code))
       (lambda (s) (println "Error to find Identifer '" s "'."))))
 
   ; (do

@@ -4,7 +4,7 @@
 
 ; Load
 
-(load "main.ss")
+(load "load.ss")
 
 ; Main
 
@@ -14,7 +14,7 @@
 
 (let loop ()
   (print "> ")
-  (let ((code (read-eval-all (load-port-line))))
+  (let ((code (read-eval-all gfunc (load-port-line))))
     (print "=> ")
     (println code)
     (println "")

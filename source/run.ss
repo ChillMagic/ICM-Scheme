@@ -4,9 +4,9 @@
 
 ; Load
 
-(load "main.ss")
+(load "load.ss")
 
 ; Main
 
 (define port (open-input-file "../run.chl"))
-(read-eval-all (load-port-file port))
+(read-eval-all gfunc (load-port-file port))
