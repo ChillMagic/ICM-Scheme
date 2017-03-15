@@ -69,11 +69,7 @@
   ; (? bexpr sexpr1 <sexpr2>)
   (define (expr-? gfunc code)
     (let ((ccdr (cdr code)))
-         (if-expr gfunc
-                  (car  ccdr)
-                  (cadr ccdr)
-                  (caddr  ccdr)
-                  (errors))))
+         (if-expr gfunc (car  ccdr) (cadr ccdr) (caddr  ccdr) (errors))))
 
   ; (if bexpr0
   ;    sexpr0 ...
