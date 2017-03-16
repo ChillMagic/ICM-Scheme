@@ -7,7 +7,7 @@
 
 (library (ICM-Core)
   (export expr-eval if-expr)
-  (import (rnrs) (Basic) (Symbol)
+  (import (rnrs) (Basic) (Symbol) (Output)
     (prefix (GlobalFunc) GlobalFunc.)
     (prefix (Basic) Basic.)
     (prefix (List) List.))

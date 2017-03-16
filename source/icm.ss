@@ -10,7 +10,7 @@
     (prefix (GlobalFunc) GlobalFunc.))
 
   (define (calc code)
-      (cond ((null? code) nil)
+      (cond ((null? code) `nil)
             ((list? code) `())
             ((number? code) code))
   )

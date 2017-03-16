@@ -12,13 +12,14 @@
 
 ; Import
 
-(import (ICM) (Basic) (ICM-Core)
+(import (ICM) (Basic) (Output) (ICM-Core)
   (prefix (HashTable) HashTable.)
   (prefix (GlobalFunc) GlobalFunc.)
   (prefix (Symbol) Symbol.)
   (prefix (List) List.)
   (prefix (Vector) Vector.)
   (prefix (String) String.)
+  (prefix (Convert) Convert.)
 )
 
 ; Functions

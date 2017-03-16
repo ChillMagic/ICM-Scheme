@@ -3,11 +3,8 @@
 ; Author : Chill
 
 (library (Basic)
-    (export T F nil loop-do print println p)
+    (export loop-do)
     (import (rnrs))
-    (define T `T)
-    (define F `F)
-    (define nil `nil)
     (define (loop-do func args)
       (let loop ((lst args))
         (if (null? lst)
@@ -15,29 +12,6 @@
           (begin
             (func (car lst))
             (loop (cdr lst))))))
-    (define (print . x)
-      (loop-do display x))
-    (define (println . x)
-      (apply print x) (newline) x)
-    (define (p . x)
-      (loop-do p-base x) (newline) `nil)
-
-    (define (p-base e)
-      (cond ((number? e) (print e))
-            ((string? e) (print #\" e #\"))
-            ((list?   e) (print "[") (ps-base e) (print "]"))
-            ((symbol? e) (print e))
-            (else (print e))))
-    (define (ps-base args)
-      (let ((func p-base))
-        (if (not (null? args))
-          (let loop ((lst args))
-            (if (null? (cdr lst))
-              (func (car lst))
-              (begin
-                (func (car lst))
-                (print " ")
-                (loop (cdr lst))))))))
 )
 
 (define-syntax import-prefix
