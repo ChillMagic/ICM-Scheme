@@ -8,6 +8,7 @@
 (library (GlobalFunc)
   (export init call)
   (import (rnrs)
+    (prefix (ToStringFormat) ToStringFormat.)
     (prefix (HashTable) HashTable.)
     (prefix (Output) Output.)
     (prefix (Symbol) Symbol.)

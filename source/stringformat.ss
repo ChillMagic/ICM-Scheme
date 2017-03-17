@@ -2,8 +2,6 @@
 ; stringformat.ss
 ; Author : Chill
 
-(load "library.ss")
-
 (define (init-stringformat)
   (import
     (ToStringFormat)

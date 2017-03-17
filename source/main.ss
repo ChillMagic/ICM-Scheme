@@ -6,15 +6,10 @@
 
 (load "load.ss")
 
-(init-stringformat)
-
 (import (prefix (ToStringFormat) ToStringFormat.))
 
-(p #t)
-
 ; Main
-
-;(println (expr-eval gfunc `(Console.p (? T 5 6))))
+(println (expr-eval gfunc `(Console.p "ss")))
 
 ;(define ConvertTypeMap (HashTable.new))
 

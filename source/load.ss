@@ -62,4 +62,5 @@
 
 (define gfunc (HashTable.new))
 
+(init-stringformat)
 (GlobalFunc.init gfunc)
