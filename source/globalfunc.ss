@@ -9,7 +9,6 @@
   (export init call)
   (import (rnrs)
     (prefix (HashTable) HashTable.)
-    (prefix (Basic) Basic.)
     (prefix (Output) Output.)
     (prefix (Symbol) Symbol.)
     (prefix (Number) Number.)

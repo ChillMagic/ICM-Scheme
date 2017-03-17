@@ -6,50 +6,42 @@
 
 (load "load.ss")
 
+(init-stringformat)
+
+(import (prefix (ToStringFormat) ToStringFormat.))
+
+(p #t)
+
 ; Main
 
-(println (expr-eval gfunc `(Console.p (? T 5 6))))
+;(println (expr-eval gfunc `(Console.p (? T 5 6))))
 
-(define ConvertTypeMap (HashTable.new))
+;(define ConvertTypeMap (HashTable.new))
 
-(Convert.!-> ConvertTypeMap `String `Number string->number)
-(Convert.!-> ConvertTypeMap `Number `String number->string)
-(p ((Convert.-> ConvertTypeMap `Number `String) 5))
+;(Convert.!-> ConvertTypeMap `String `Number string->number)
+;(Convert.!-> ConvertTypeMap `Number `String number->string)
+;(p ((Convert.-> ConvertTypeMap `Number `String) 5))
 
+;(import (prefix (ToStringFormat) ToStringFormat.))
 
-(p (string->list "123456789"))
-
-(define (type e)
-  (cond ((boolean? e)    'boolean)
-        ((pair? e)       'pair)
-        ((symbol? e)     'symbol)
-        ((number? e)     'number)
-        ((char? e)       'char)
-        ((string? e)     'string)
-        ((vector? e)     'vector)
-        ((procedure? e)  'procedure)
-        ((list? e)       'list)
-        ((eof-object? e) 'eof)
-        ((hashtable? e)  'hashtable)
-        (else            'unkonwn)
-  )
-)
+;(println (ToStringFormat.to-string (vector 1 2 3)))
 
 
-
-(p ConvertTypeMap)
-
-(p hashtable-keys)
+(print (vector 5 6 7))
+(p "sssS")
 
 
 (define ahash (make-eq-hashtable))
 (hashtable-set! ahash 0 "a")
 (hashtable-set! ahash 1 "b")
-(p (let-values (((keys values) (hashtable-entries ahash)))
-  values
-))
-(p (hashtable-values ConvertTypeMap))
+(hashtable-set! ahash 2 "c")
+(println (ToStringFormat.to-string ahash))
 
-(p (type `(1 . 2)))
+;(p (hashtable-values ConvertTypeMap))
 
-(p (string ))
+;(p (type `(1 . 2)))
+
+;(p (string ))
+
+
+;(p (for-each display `(1 2 3)))

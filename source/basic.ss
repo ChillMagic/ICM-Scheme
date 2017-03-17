@@ -2,18 +2,6 @@
 ; basic.ss
 ; Author : Chill
 
-(library (Basic)
-    (export loop-do)
-    (import (rnrs))
-    (define (loop-do func args)
-      (let loop ((lst args))
-        (if (null? lst)
-          args
-          (begin
-            (func (car lst))
-            (loop (cdr lst))))))
-)
-
 (define-syntax import-prefix
   (syntax-rules ()
     ((_ name suffix)

@@ -6,7 +6,7 @@
 
 (library (ICM)
   (export)
-  (import (rnrs) (Basic)
+  (import (rnrs)
     (prefix (GlobalFunc) GlobalFunc.))
 
   (define (calc code)

@@ -9,10 +9,11 @@
 (load "globalfunc.ss")
 (load "core.ss")
 (load "icm.ss")
+(load "stringformat.ss")
 
 ; Import
 
-(import (ICM) (Basic) (Output) (ICM-Core)
+(import (ICM) (Output) (ICM-Core)
   (prefix (HashTable) HashTable.)
   (prefix (GlobalFunc) GlobalFunc.)
   (prefix (Symbol) Symbol.)
@@ -22,6 +23,8 @@
   (prefix (Convert) Convert.)
 )
 
+; Load Config
+
 ; Functions
 
 (define (load-port port jfunc)
@@ -29,10 +32,10 @@
     (let loop ()
       (let ((c (read-char port)))
         (if (jfunc c)
-          (open-input-string command)
+          (open-string-input-port command)
           (begin
             (cond ((char=? #\[ c)
-                    (set! command (String.+ command "(list")))
+                    (set! command (String.+ command "(list ")))
                   ((char=? #\] c)
                     (set! command (String.+ command ")")))
                   (else
