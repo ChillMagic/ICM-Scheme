@@ -57,7 +57,8 @@
       (lambda (s)
         (display "Error to find Identifer '")
         (display s)
-        (display "'."))))
+        (display "'.\n")
+        'nil)))
 
   ; (do
   ;    <sexpr ...>
