@@ -126,7 +126,7 @@
                    (loop (+ i 1))))))))
 
 (library (ToStringFormat)
-         (export to-string to-pformat display-to-string SystemToStringFormatTable)
+         (export to-string to-pformat type display-to-string SystemToStringFormatTable)
          (import (rnrs)
            (prefix (Vector) Vector.)
            (prefix (HashTable) HashTable.))

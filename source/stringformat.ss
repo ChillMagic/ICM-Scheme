@@ -5,6 +5,7 @@
 (define (init-stringformat)
   (import
     (ToStringFormat)
+    (prefix (Symbol) Symbol.)
     (prefix (String) String.)
     (prefix (List) List.)
     (prefix (Vector) Vector.)
@@ -13,8 +14,8 @@
   (HashTable.insert! SystemToStringFormatTable
     'boolean
     (vector
-      (lambda (e) (if e "#t" "#f"))
-      (lambda (e) (if e "#t" "#f"))))
+      (lambda (e) (if e "T" "F"))
+      (lambda (e) (if e "T" "F"))))
 
   (HashTable.insert! SystemToStringFormatTable
     'number

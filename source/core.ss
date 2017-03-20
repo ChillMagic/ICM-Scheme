@@ -54,7 +54,10 @@
   ; (fexpr <sexpr ...>)
   (define (expr-fcall gfunc code)
     (GlobalFunc.call gfunc (expr-eval gfunc (car code)) (expr-evals gfunc (cdr code))
-      (lambda (s) (println "Error to find Identifer '" s "'."))))
+      (lambda (s)
+        (display "Error to find Identifer '")
+        (display s)
+        (display "'."))))
 
   ; (do
   ;    <sexpr ...>

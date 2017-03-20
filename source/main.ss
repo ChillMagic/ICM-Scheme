@@ -21,11 +21,6 @@
 
 ;(println (ToStringFormat.to-string (vector 1 2 3)))
 
-
-(print (vector 5 6 7))
-(p "sssS")
-
-
 (define ahash (make-eq-hashtable))
 (hashtable-set! ahash 0 "a")
 (hashtable-set! ahash 1 "b")
