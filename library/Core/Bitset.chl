@@ -1,0 +1,9 @@
+; Core/Bitset
+
+(module Bitset
+  (declare = [(x : Bitset) (rest : Bitset ...)] -> Boolean)
+  (declare and [(x : Bitset) (rest : Bitset ...)] -> Bitset)
+  (declare not [(x : Bitset)] -> Bitset)
+  (declare or  [(x : Bitset) (rest : Bitset ...)] -> Bitset)
+  (declare xor [(x : Bitset) (rest : Bitset ...)] -> Bitset)
+)

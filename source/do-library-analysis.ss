@@ -5,6 +5,12 @@
 (load "library-analysis.ss")
 (load "load.ss")
 
+(import
+  (Output)
+  (prefix (HashTable) HashTable.)
+  (prefix (List) List.)
+  (prefix (Vector) Vector.))
+
 (define (load-libaray-file path filelist)
   (for-each
     (lambda (f)
@@ -14,18 +20,29 @@
             (open-input-file (string-append path f) ))) 'global))
     filelist))
 
-(load-libaray-file "../library/Core/" (directory-list "../library/Core/"))
+(define (.display-list lst port)
+  (List.for-each-with-inter
+    lst
+    (lambda (e) (.display e port))
+    (lambda () (display " " port))))
 
-(import
-  (Output)
-  (prefix (HashTable) HashTable.)
-  (prefix (Vector) Vector.))
-
+(define (.display e port)
+  (if (list? e)
+    (if (and (symbol? (car e)) (symbol=? (car e) 'list))
+      (begin
+        (display "[" port)
+        (.display-list (cdr e) port)
+        (display "]" port))
+      (begin
+        (display "(" port)
+        (.display-list e port)
+        (display ")" port)))
+    (display e port)))
 
 (define (.do-declare library ident in-args out port)
   (display "### " port) (display ident port) (newline port)
   (display "[" port)
-  (for-each-with-inter (cdr in-args) (lambda (e) (display e port)) (lambda () (display " " port)))
+  (for-each-with-inter (cdr in-args) (lambda (e) (.display e port)) (lambda () (display " " port)))
   (display "] -> " port)
   (display out port)
   (display "\n" port))
@@ -52,6 +69,9 @@
   (when (file-exists? f)
     (delete-file f))
   (open-output-file f))
+
+(let ((path "../library/Core/"))
+  (load-libaray-file path (directory-list path)))
 
 (define port (.open-output-file "../library.md"))
 (output-library-markdown GlobalIdentTable port)

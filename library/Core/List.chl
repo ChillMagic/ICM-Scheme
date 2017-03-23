@@ -2,4 +2,6 @@
 
 (module List
   (declare + [(x : List) (rest : List ...)] -> List)
+  (declare reserve [(x : List)] -> List)
+  (declare sort [(x : List) (f : (Function [a b] -> Boolean))] -> List)
 )

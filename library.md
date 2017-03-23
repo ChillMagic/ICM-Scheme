@@ -1,4 +1,21 @@
 # Library
+## Bitset
+
+### =
+[(x : Bitset) (rest : Bitset ...)] -> Boolean
+
+### and
+[(x : Bitset) (rest : Bitset ...)] -> Bitset
+
+### not
+[(x : Bitset)] -> Bitset
+
+### or
+[(x : Bitset) (rest : Bitset ...)] -> Bitset
+
+### xor
+[(x : Bitset) (rest : Bitset ...)] -> Bitset
+
 ## Boolean
 
 ### =
@@ -20,6 +37,12 @@
 
 ### +
 [(x : List) (rest : List ...)] -> List
+
+### reserve
+[(x : List)] -> List
+
+### sort
+[(x : List) (f : (Function [a b] -> Boolean))] -> List
 
 ## Number
 
