@@ -1,0 +1,9 @@
+; Core/String
+
+(module String
+  (declare + [(x : String) (rest : String ...)] -> String)
+  (declare ->List [(str : String)] -> List)
+  (declare ->Number [(str : String)] -> Number)
+  (declare ->Symbol [(str : String)] -> Symbol)
+  (declare sub [(str : String) (id : Integer) (len : Integer)] -> String)
+)

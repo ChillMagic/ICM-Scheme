@@ -3,5 +3,7 @@
 (Console.println "2")
 
 (defunc add [(a : Int) (b : Int)] -> Int
-  
-)
+  (return (+ a b)))
+
+(defunc fact [(n : Integer)] -> Integer
+  (return (? (= n 1) 1 (* n (fact (- n 1))))))

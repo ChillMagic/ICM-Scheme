@@ -1,0 +1,7 @@
+; Core/System
+
+(module System
+  (declare system  [(cmd : String)] -> Integer)
+  (declare print   [(any : Vary) (rest : Vary ...)] -> List)
+  (declare println [(any : Vary) (rest : Vary ...)] -> List)
+)

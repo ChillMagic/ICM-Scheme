@@ -21,3 +21,10 @@ scheme --script repl.ss
 cd source
 scheme --script run.ss
 ```
+
+### Create Library Document
+
+```
+cd source
+scheme --script do-library-analysis.ss
+```

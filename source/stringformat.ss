@@ -82,11 +82,14 @@
     'hashtable
     (let ((to-format-hashtable
       (lambda (hashtable)
-        (to-format-with-container
-          hashtable
-          HashTable.for-each-with-inter
-          (lambda (k v) (String.+ (to-pformat k) " => " (to-pformat v)))
-          "M[(" ")]" ") ("))))
+
+        (if (= (HashTable.size hashtable) 0)
+          "M[]"
+          (to-format-with-container
+            hashtable
+            HashTable.for-each-with-inter
+            (lambda (k v) (String.+ (to-pformat k) " => " (to-pformat v)))
+            "M[(" ")]" ") (")))))
       (vector
         to-format-hashtable
         to-format-hashtable))))

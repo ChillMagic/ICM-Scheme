@@ -1,0 +1,5 @@
+; Core/List
+
+(module List
+  (declare + [(x : List) (rest : List ...)] -> List)
+)

@@ -1,0 +1,9 @@
+; Core/Boolean
+
+(module Boolean
+  (declare = [(x : Boolean) (rest : Boolean ...)] -> Boolean)
+  (declare and [(x : Boolean) (rest : Boolean ...)] -> Boolean)
+  (declare not [(x : Boolean)] -> Boolean)
+  (declare or  [(x : Boolean) (rest : Boolean ...)] -> Boolean)
+  (declare xor [(x : Boolean) (rest : Boolean ...)] -> Boolean)
+)

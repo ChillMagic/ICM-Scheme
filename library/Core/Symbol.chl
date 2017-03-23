@@ -1,0 +1,5 @@
+; Core/Symbol
+
+(module Symbol
+  (declare ->String [(sym : Symbol)] -> String)
+)

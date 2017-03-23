@@ -1,0 +1,20 @@
+; Core/Number
+
+(module Number
+  (declare +  [(x : Number) (rest : Number ...)] -> Number)
+  (declare -  [(x : Number) (rest : Number ...)] -> Number)
+  (declare *  [(x : Number) (rest : Number ...)] -> Number)
+  (declare /  [(x : Number) (rest : Number ...)] -> Number)
+  (declare =  [(x : Number) (rest : Number ...)] -> Boolean)
+  (declare <  [(x : Number) (rest : Number ...)] -> Boolean)
+  (declare <= [(x : Number) (rest : Number ...)] -> Boolean)
+  (declare >  [(x : Number) (rest : Number ...)] -> Boolean)
+  (declare >= [(x : Number) (rest : Number ...)] -> Boolean)
+  (declare ->String [(x : Number)] -> Number)
+  (declare abs [(x : Number)] -> Number)
+  (declare dec [(x : Number)] -> Number)
+  (declare gcd [(x : Number) (y : Number)] -> Number)
+  (declare inc [(x : Number)] -> Number)
+  (declare mod [(x : Number) (y : Number)] -> Number)
+  (declare rem [(x : Number) (y : Number)] -> Number)
+)
