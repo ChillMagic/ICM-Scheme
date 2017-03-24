@@ -3,7 +3,7 @@
 ; Author : Chill
 
 (load "library-analysis.ss")
-(load "load.ss")
+(load "read.ss")
 
 (import
   (Output)
@@ -73,5 +73,5 @@
 (let ((path "../library/Core/"))
   (load-libaray-file path (directory-list path)))
 
-(define port (.open-output-file "../library.md"))
-(output-library-markdown GlobalIdentTable port)
+;(output-library-markdown GlobalIdentTable (.open-output-file "../library.md"))
+(output-library-markdown GlobalIdentTable (current-output-port))
