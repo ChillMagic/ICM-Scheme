@@ -3,13 +3,7 @@
 ; Author : Chill
 
 (define (init-stringformat)
-  (import
-    (ToStringFormat)
-    (prefix (Symbol) Symbol.)
-    (prefix (String) String.)
-    (prefix (List) List.)
-    (prefix (Vector) Vector.)
-    (prefix (HashTable) HashTable.))
+  (import (ToStringFormat))
 
   (HashTable.insert! SystemToStringFormatTable
     'boolean

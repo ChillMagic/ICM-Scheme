@@ -8,29 +8,22 @@
 (load "globalfunc.ss")
 (load "core.ss")
 (load "icm.ss")
+(load "read.ss")
 
 ; Import
 
-(import (ICM) (Output) (ICM-Core)
-  (prefix (HashTable) HashTable.)
-  (prefix (GlobalFunc) GlobalFunc.)
-  (prefix (Symbol) Symbol.)
-  (prefix (List) List.)
-  (prefix (Vector) Vector.)
-  (prefix (String) String.)
-  (prefix (Convert) Convert.)
-)
-
-; Load Config
+(import (ICM) (ICM-Core)
+  (prefix (GlobalFunc) GlobalFunc.))
 
 ; Functions
-
-(load "read.ss")
 
 (define (read-eval-all gfunc port)
   (read-eval port (lambda (v) (expr-eval gfunc v))))
 
+; Load
+
 (ifndef LOADED_LOAD
-  (eval '(define gfunc (HashTable.new)))
+  (.define LOADED_LOAD)
+  (.define gfunc (HashTable.new))
   (GlobalFunc.init gfunc)
 )
