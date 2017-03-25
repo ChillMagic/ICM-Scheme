@@ -2,9 +2,7 @@
 ; library-analysis.ss
 ; Author : Chill
 
-(load "library.ss")
-(load "stringformat.ss")
-(init-stringformat)
+(load "basic.ss")
 
 (define (for-each-with-inter lst elt-func int-func)
   (import (prefix (List) List.))

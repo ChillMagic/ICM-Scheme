@@ -5,11 +5,9 @@
 ; Load
 
 (load "basic.ss")
-(load "library.ss")
 (load "globalfunc.ss")
 (load "core.ss")
 (load "icm.ss")
-(load "stringformat.ss")
 
 ; Import
 
@@ -32,7 +30,7 @@
 (define (read-eval-all gfunc port)
   (read-eval port (lambda (v) (expr-eval gfunc v))))
 
-(define gfunc (HashTable.new))
-
-(init-stringformat)
-(GlobalFunc.init gfunc)
+(ifndef LOADED_LOAD
+  (eval '(define gfunc (HashTable.new)))
+  (GlobalFunc.init gfunc)
+)

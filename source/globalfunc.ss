@@ -3,7 +3,6 @@
 ; Author : Chill
 
 (load "basic.ss")
-(load "library.ss")
 
 (library (GlobalFunc)
   (export init call)
