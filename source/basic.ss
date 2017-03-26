@@ -7,20 +7,15 @@
     ((_ ident expr ...)
       (guard (ex (expr ...)) ident))))
 
-(define-syntax .eval
-  (syntax-rules ()
-    ((_ expr ...)
-      (eval (quote expr ...)))))
-
 (define-syntax .define
   (syntax-rules ()
     ((_ expr ...)
-      (.eval (define expr ...)))))
+      (eval (quote (define expr ...))))))
 
 (define-syntax .import
   (syntax-rules ()
     ((_ expr ...)
-      (.eval (import expr ...)))))
+      (eval (quote (import expr ...))))))
 
 (ifndef LOADED_BASIC
   (.define LOADED_BASIC)

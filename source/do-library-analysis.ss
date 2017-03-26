@@ -73,5 +73,5 @@
 (let ((path "../library/Core/"))
   (load-libaray-file path (directory-list path)))
 
-;(output-library-markdown GlobalIdentTable (.open-output-file "../library.md"))
-(output-library-markdown GlobalIdentTable (current-output-port))
+(output-library-markdown GlobalIdentTable (.open-output-file "../library.md"))
+;(output-library-markdown GlobalIdentTable (current-output-port))

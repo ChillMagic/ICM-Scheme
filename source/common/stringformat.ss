@@ -62,7 +62,7 @@
       (lambda (e)
         (to-format-with-container e List.for-each-with-inter to-string "" "" ""))
       (lambda (e)
-        (to-format-with-container e List.for-each-with-inter to-pformat "[" "]" " "))))
+        (to-format-with-container e List.for-each-with-inter to-pformat "(" ")" " "))))
 
   (HashTable.insert! SystemToStringFormatTable
     'vector
@@ -70,7 +70,7 @@
       (lambda (e)
         (to-format-with-container e Vector.for-each-with-inter to-string "" "" ""))
       (lambda (e)
-        (to-format-with-container e Vector.for-each-with-inter to-pformat "V[" "]" " "))))
+        (to-format-with-container e Vector.for-each-with-inter to-pformat "[" "]" " "))))
 
   (HashTable.insert! SystemToStringFormatTable
     'hashtable
@@ -78,12 +78,12 @@
       (lambda (hashtable)
 
         (if (= (HashTable.size hashtable) 0)
-          "M[]"
+          "{}"
           (to-format-with-container
             hashtable
             HashTable.for-each-with-inter
             (lambda (k v) (String.+ (to-pformat k) " => " (to-pformat v)))
-            "M[(" ")]" ") (")))))
+            "{(" ")}" ") (")))))
       (vector
         to-format-hashtable
         to-format-hashtable))))
