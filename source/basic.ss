@@ -2,26 +2,14 @@
 ; basic.ss
 ; Author : Chill
 
-(define-syntax ifndef
-  (syntax-rules ()
-    ((_ ident expr ...)
-      (guard (ex (expr ...)) ident))))
-
-(define-syntax .define
-  (syntax-rules ()
-    ((_ expr ...)
-      (eval (quote (define expr ...))))))
-
-(define-syntax .import
-  (syntax-rules ()
-    ((_ expr ...)
-      (eval (quote (import expr ...))))))
+; Load Macro
+(load "basic/macro.ss")
 
 (ifndef LOADED_BASIC
   (.define LOADED_BASIC)
 
   ; Load Library
-  (load "common/library.ss")
+  (load "basic/library.ss")
   (.import
     (Output)
     (prefix (Symbol) Symbol.)
@@ -33,6 +21,6 @@
   )
 
   ; Config StringFormat
-  (load "common/stringformat.ss")
+  (load "basic/stringformat.ss")
   (init-stringformat)
 )
