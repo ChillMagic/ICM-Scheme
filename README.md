@@ -8,23 +8,39 @@ The Interpreter of The Chill Programming Language on Scheme
 
 This Project can be run on *Chez Scheme*.
 
-### REPL Mode :
+### **At first, run compile-boot:**
+
+**Windows:**
+
+```
+compile-boot.cmd
+```
+
+**Linux:**
+
+```
+bash ./compile-boot.sh
+```
+
+### **Then, select a mode to run:**
+
+**REPL Mode :**
 
 ```
 cd source
-scheme --script repl.ss
+scheme --boot ../loadrelative.boot --script repl.ss
 ```
 
-### File Mode :
-
-```
-cd source
-scheme --script run.ss
-```
-
-### Create Library Document
+**File Mode :**
 
 ```
 cd source
-scheme --script do-library-analysis.ss
+scheme --boot ../loadrelative.boot --script run.ss
+```
+
+**Create Library Document :**
+
+```
+cd source
+scheme --boot ../loadrelative.boot --script do-library-analysis.ss
 ```
