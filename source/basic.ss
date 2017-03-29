@@ -3,13 +3,14 @@
 ; Author : Chill
 
 ; Load Macro
-(load "basic/macro.ss")
+(load-relative "basic/macro.ss")
 
+; Load Basic
 (ifndef LOADED_BASIC
   (.define LOADED_BASIC)
 
   ; Load Library
-  (load "basic/library.ss")
+  (load-relative "basic/library.ss")
   (.import
     (Output)
     (prefix (Symbol) Symbol.)
@@ -21,6 +22,6 @@
   )
 
   ; Config StringFormat
-  (load "basic/stringformat.ss")
+  (load-relative "basic/stringformat.ss")
   (init-stringformat)
 )

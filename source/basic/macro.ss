@@ -1,5 +1,5 @@
 ; ICM on Scheme
-; stringformat.ss
+; macro.ss
 ; Author : Chill
 
 (define-syntax ifndef
