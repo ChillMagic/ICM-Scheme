@@ -2,8 +2,6 @@
 ; analysisbase.ss
 ; Author : Chill
 
-(load "basic.ss")
-
 (library (ICM-AnalysisBase)
   (export do-eval)
   (import (rnrs))

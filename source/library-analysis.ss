@@ -2,7 +2,7 @@
 ; library-analysis.ss
 ; Author : Chill
 
-(load "basic.ss")
+(load-relative "basic.ss")
 
 (define (for-each-with-inter lst elt-func int-func)
   (import (prefix (List) List.))

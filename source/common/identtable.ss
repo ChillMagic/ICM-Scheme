@@ -2,8 +2,8 @@
 ; identtable.ss
 ; Author : Chill
 
-(load "basic.ss")
-(load "analysisbase.ss")
+(load-relative "../basic.ss")
+(load-relative "analysisbase.ss")
 
 ; Module : (module Name ...)
 ; Struct : (struct ...) / (defsturct Name ...)

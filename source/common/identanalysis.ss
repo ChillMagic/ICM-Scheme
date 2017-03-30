@@ -2,9 +2,9 @@
 ; identtable.ss
 ; Author : Chill
 
-(load "basic.ss")
-(load "analysisbase.ss")
-(load "identtable.ss")
+(load-relative "../basic.ss")
+(load-relative "analysisbase.ss")
+(load-relative "identtable.ss")
 
 (library (ICM-IdentEnvironment)
   (export new)

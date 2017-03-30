@@ -2,7 +2,7 @@
 ; icm.ss
 ; Author : Chill
 
-(load "globalfunc.ss")
+(load-relative "globalfunc.ss")
 
 (library (ICM)
   (export)

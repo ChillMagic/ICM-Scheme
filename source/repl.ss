@@ -4,7 +4,7 @@
 
 ; Load
 
-(load "load.ss")
+(load-relative "load.ss")
 
 ; Main
 (println "ICM on Scheme 0.1")

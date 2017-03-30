@@ -2,7 +2,7 @@
 ; globalfunc.ss
 ; Author : Chill
 
-(load "basic.ss")
+(load-relative "basic.ss")
 
 (library (GlobalFunc)
   (export init call)

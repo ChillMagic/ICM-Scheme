@@ -2,8 +2,8 @@
 ; do-library-analysis.ss
 ; Author : Chill
 
-(load "library-analysis.ss")
-(load "read.ss")
+(load-relative "library-analysis.ss")
+(load-relative "read.ss")
 
 (import
   (Output)

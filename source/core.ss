@@ -2,7 +2,7 @@
 ; core.ss
 ; Author : Chill
 
-(load "basic.ss")
+(load-relative "basic.ss")
 
 (library (ICM-Core)
   (export expr-eval if-expr)

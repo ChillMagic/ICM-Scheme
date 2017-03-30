@@ -4,11 +4,11 @@
 
 ; Load
 
-(load "basic.ss")
-(load "globalfunc.ss")
-(load "core.ss")
-(load "icm.ss")
-(load "read.ss")
+(load-relative "basic.ss")
+(load-relative "globalfunc.ss")
+(load-relative "core.ss")
+(load-relative "icm.ss")
+(load-relative "read.ss")
 
 ; Import
 

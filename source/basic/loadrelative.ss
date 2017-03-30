@@ -1,7 +1,7 @@
 ; ICM on Scheme
 ; loadrelative.ss
 ; Author : Chill
-  
+
 (define (string->path spath)
   (let loop ((lst (string->list spath)) (field (list)) (plst (list)))
     (if (null? lst)

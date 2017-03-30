@@ -4,7 +4,7 @@
 
 ; Load
 
-(load "load.ss")
+(load-relative "load.ss")
 
 (import (prefix (ToStringFormat) ToStringFormat.))
 
