@@ -18,6 +18,7 @@
     (prefix (List) List.)
     (prefix (Vector) Vector.)
     (prefix (Convert) Convert.)
+    (prefix (Stack) Stack.)
     (prefix (HashTable) HashTable.)
   )
 
