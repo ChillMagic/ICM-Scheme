@@ -7,17 +7,18 @@
 
 (library (ICM-Core)
   (export expr-eval if-expr init-eval-func)
-  (import (rnrs) (Symbol) (Output) (ICM-AnalysisBase)
+  (import (rnrs) (Output) (ICM-AnalysisBase)
+  	      (prefix (Symbol) Symbol.)
           (prefix (HashTable) HashTable.)
           (prefix (GlobalFunc) GlobalFunc.)
           (prefix (List) List.))
 
   (define-syntax if-expr
     (syntax-rules ()
-      ((_ gfunc b-expr f-expr l-expr e-expr)
-       (let ((b-value (expr-eval b-expr gfunc)))
-         (cond ((=? b-value `T) (expr-eval f-expr gfunc))
-               ((=? b-value `F) (expr-eval l-expr gfunc))
+      ((_ env b-expr f-expr l-expr e-expr)
+       (let ((b-value (expr-eval b-expr env)))
+         (cond ((Symbol.=? b-value `T) (expr-eval f-expr env))
+               ((Symbol.=? b-value `F) (expr-eval l-expr env))
                (else e-expr))))))
 
   (define (errors) (display "Error Occur.\n") `nil)
@@ -49,15 +50,15 @@
 	(HashTable.insert! eval-func-map 'function  expr-function )
 	(HashTable.insert! eval-func-map 'struct    expr-struct   ))
 
-  (define (expr-evals code gfunc)
+  (define (expr-evals code env)
     (let loop ((lst code) (rlist `()))
       (if (null? lst)
           rlist
-          (loop (cdr lst) (List.push-back rlist (expr-eval (car lst) gfunc))))))
+          (loop (cdr lst) (List.push-back rlist (expr-eval (car lst) env))))))
 
   ;; (fexpr <sexpr ...>)
-  (define (expr-fcall code gfunc)
-    (GlobalFunc.call gfunc (expr-eval (car code) gfunc) (expr-evals (cdr code) gfunc)
+  (define (expr-fcall code env)
+    (GlobalFunc.call env (expr-eval (car code) env) (expr-evals (cdr code) env)
                      (lambda (s)
                        (display "Error to find Identifer '")
                        (display s)
@@ -67,15 +68,15 @@
   ;; (do
   ;;    <sexpr ...>
   ;; )
-  (define (expr-do code gfunc)
+  (define (expr-do code env)
     (let loop ((lst code) (last `nil))
       (if (null? lst)
           last
-          (loop (cdr lst) (expr-eval (car lst) gfunc)))))
+          (loop (cdr lst) (expr-eval (car lst) env)))))
 
   ;; (? bexpr sexpr1 <sexpr2>)
-  (define (expr-? code gfunc)
-    (if-expr gfunc (car code) (cadr code) (caddr code) (errors)))
+  (define (expr-? code env)
+    (if-expr env (car code) (cadr code) (caddr code) (errors)))
 
   ;; (if bexpr0
   ;;    sexpr0 ...
@@ -84,91 +85,91 @@
   ;;  <else
   ;;    sexprn ...>
   ;; )
-  (define (expr-if code gfunc)
+  (define (expr-if code env)
     code
     )
 
   ;; (loop
   ;;    sexpr ...
   ;; )
-  (define (expr-loop code gfunc)
+  (define (expr-loop code env)
     code
     )
 
   ;; (while bexpr
   ;;    sexpr ...
   ;; )
-  (define (expr-while code gfunc)
+  (define (expr-while code env)
     code
     )
 
   ;; (for I in rexpr
   ;;    sexpr ...
   ;; )
-  (define (expr-for code gfunc)
+  (define (expr-for code env)
     code
     )
 
   ;; (let I vexpr)
-  (define (expr-let code gfunc)
+  (define (expr-let code env)
     code
     )
 
   ;; (set I vexpr)
-  (define (expr-set code gfunc)
+  (define (expr-set code env)
     code
     )
 
   ;; (cpy <I> vexpr)
-  (define (expr-cpy code gfunc)
+  (define (expr-cpy code env)
     code
     )
 
   ;; (ref I I2)
-  (define (expr-ref code gfunc)
+  (define (expr-ref code env)
     code
     )
 
   ;; (dim I texpr)
-  (define (expr-dim code gfunc)
+  (define (expr-dim code env)
     code
     )
 
   ;; (restrict I texpr)
-  (define (expr-restrict code gfunc)
+  (define (expr-restrict code env)
     code
     )
 
   ;; (define I cexpr)
-  (define (expr-define code gfunc)
+  (define (expr-define code env)
     code
     )
 
   ;; (defunc I [<(I <: Type>)>*] <-> Type>
   ;;   sexpr ...
   ;; )
-  (define (expr-defunc code gfunc)
+  (define (expr-defunc code env)
     code
     )
 
   ;; (function <I> [<(I <: Type>)>*] <-> Type>
   ;;    sexpr ...
   ;; )
-  (define (expr-function code gfunc)
+  (define (expr-function code env)
     code
     )
 
   ;; (defstruct I
   ;;    <[(I <: Type>)]>*
   ;; )
-  (define (expr-defstruct code gfunc)
+  (define (expr-defstruct code env)
     code
     )
 
   ;; (struct <I>
   ;;    <[(I <: Type>)]>*
   ;; )
-  (define (expr-struct code gfunc)
+  (define (expr-struct code env)
     code
     )
   )
