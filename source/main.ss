@@ -5,11 +5,12 @@
 ; Load
 
 (load-relative "load.ss")
+(load-relative "common/identanalysis.ss")
 
 (import (prefix (ToStringFormat) ToStringFormat.))
 
 ; Main
-(println (expr-eval gfunc `(Console.p "ss")))
+(println (expr-eval `(Console.p "ss") gfunc))
 
 ;(define ConvertTypeMap (HashTable.new))
 
@@ -28,9 +29,6 @@
 (define (insert-gtable! s k v)
   (HashTable.insert! (get-gtable s) k v))
 
-(import (prefix (Number) Number.)
-(prefix (String) String.)
-(prefix (Output) Output.))
 
 (insert-gtable! 'Number '+ Number.+)
 (insert-gtable! 'Number '- Number.-)
@@ -39,9 +37,9 @@
 (insert-gtable! 'Number '= Number.=?)
 (insert-gtable! 'String '+ String.+)
 (insert-gtable! 'String '= String.=?)
-(insert-gtable! 'Console 'print Output.print)
-(insert-gtable! 'Console 'println Output.println)
-(insert-gtable! 'Console 'p Output.p)
+(insert-gtable! 'Console 'print print)
+(insert-gtable! 'Console 'println println)
+(insert-gtable! 'Console 'p p)
 
 ;(p GTable)
 
@@ -59,15 +57,20 @@
 
 (print-gtable)
 
-;(p (cons 5 b (list 5 6)))
+(import (prefix (ICM-IdentAnalysis) ICM-IdentAnalysis.)
+        (prefix (IdentTable) IdentTable.)
+        (prefix (ICM-IdentEnvironment) ICM-IdentEnvironment.))
 
-(display (append (list 5 6) 5))
+(ICM-IdentAnalysis.init-eval-func)
+(define gienv (ICM-IdentEnvironment.new))
 
-;(p (hashtable-values ConvertTypeMap))
+(define testcode
+  '(do (define a)
+       (defunc b)
+     (module A (define a) (defunc b))
+     (defstruct B (dim a) (dim b) (define c))
+     (dim c)))
 
-;(p (type `(1 . 2)))
+(ICM-IdentAnalysis.eval testcode gienv)
 
-;(p (string ))
-
-
-;(p (for-each display `(1 2 3)))
+(IdentTable.print (ICM-IdentEnvironment.get-cit gienv))

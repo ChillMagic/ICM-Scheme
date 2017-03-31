@@ -18,7 +18,7 @@
 ; Functions
 
 (define (read-eval-all gfunc port)
-  (read-eval port (lambda (v) (expr-eval gfunc v))))
+  (read-eval port (lambda (v) (expr-eval v gfunc))))
 
 ; Load
 
@@ -26,4 +26,5 @@
   (.define LOADED_LOAD)
   (.define gfunc (HashTable.new))
   (GlobalFunc.init gfunc)
+  (init-eval-func)
 )

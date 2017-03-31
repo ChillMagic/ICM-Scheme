@@ -108,7 +108,8 @@
 
 (library (HashTable)
   (export new is? size entries keys values insert! include?
-          get set get! for-each for-each-with-inter for-sort-each)
+          get set get! for-each for-each-with-inter for-sort-each
+          for-sort-each-with-inter)
   (import (except (rnrs) values for-each)
           (prefix (Vector) Vector.))
   (define new make-eq-hashtable)
@@ -151,7 +152,12 @@
   (define (for-sort-each hashtable sort-keys-func func)
     (Vector.for-each
      (sort-keys-func (hashtable-keys hashtable))
-     (lambda (k) (func k (hashtable-ref hashtable k '()))))))
+     (lambda (k) (func k (hashtable-ref hashtable k '())))))
+  (define (for-sort-each-with-inter hashtable sort-keys-func elt-func int-func)
+    (Vector.for-each-with-inter
+     (sort-keys-func (hashtable-keys hashtable))
+     (lambda (k) (elt-func k (hashtable-ref hashtable k '())))
+     int-func)))
 
 (library (ToStringFormat)
   (export to-string to-pformat

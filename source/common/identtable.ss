@@ -6,18 +6,18 @@
 (load-relative "analysisbase.ss")
 
 (library (IdentTable)
-  (export new get-type get-name get-index get-table insert!)
+  (export new get-type get-name get-index get-table insert! print)
   (import (rnrs)
           (prefix (Vector) Vector.)
           (prefix (HashTable) HashTable.))
 
-  (define Iindex 0) ; Ident Index
-  (define Itype  1) ; Ident Type
-  (define Iname  2) ; Ident Name
+  (define Iname  0) ; Ident Name
+  (define Iindex 1) ; Ident Index
+  (define Itype  2) ; Ident Type
   (define Itable 3) ; Ident Table
 
   (define (new index type name)
-    (vector index type name (HashTable.new)))
+    (vector name index type (HashTable.new)))
 
   (define (get-index identtable)
     (Vector.get identtable Iindex))
@@ -36,9 +36,31 @@
         (begin
           (display "Identifier '")
           (display ident)
-          (display "' has been defined.")
-          (newline))
+          (display "' has been defined.\n"))
         (let ((nit (new index type ident)))
           (HashTable.insert! (get-table identtable) ident nit)
           nit)))
+  (define (p-in-identtable e)
+    (cond ((vector? e)
+           (display "[")
+           (Vector.for-each-with-inter
+            e
+            p-in-identtable
+            (lambda () (display " ")))
+           (display "]"))
+          ((hashtable? e)
+           (display "{")
+           (HashTable.for-sort-each-with-inter
+            e
+            Vector.symbol-sort
+            (lambda (k v) (p-in-identtable v))
+            (lambda () (display " ")))
+           (display "}"))
+          (else (display e))))
+  (define (print identtable)
+    (HashTable.for-sort-each-with-inter
+     (get-table identtable)
+     Vector.symbol-sort
+     (lambda (k v) (p-in-identtable v))
+     newline))
 )

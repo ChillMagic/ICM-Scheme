@@ -13,6 +13,7 @@
   (load-relative "basic/library.ss")
   (.import
     (Output)
+    (prefix (Number) Number.)
     (prefix (Symbol) Symbol.)
     (prefix (String) String.)
     (prefix (List) List.)

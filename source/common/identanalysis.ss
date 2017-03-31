@@ -99,22 +99,4 @@
     (HashTable.insert! eval-func-map 'dim       .dim)
     (HashTable.insert! eval-func-map 'restrict  .restrict)
     (HashTable.insert! eval-func-map 'defstruct .defstruct))
-
-  )
-
-(import (prefix (ICM-IdentAnalysis) ICM-IdentAnalysis.)
-        (prefix (ICM-IdentEnvironment) ICM-IdentEnvironment.))
-
-(ICM-IdentAnalysis.init-eval-func)
-(define genv (ICM-IdentEnvironment.new))
-
-(define testcode
-  '(do (define a)
-       (defunc b)
-     (module A (define a) (defunc b))
-     (defstruct B (dim a) (dim b) (define c))
-     (dim c)))
-
-(ICM-IdentAnalysis.eval testcode genv)
-(p (ICM-IdentEnvironment.get-cit genv))
-
+)
