@@ -7,19 +7,28 @@
 (load-relative "identtable.ss")
 
 (library (ICM-IdentEnvironment)
-  (export new Icid Icit Iitdat)
+  (export new get-cit insert-cid change-cit recover-cit)
   (import (rnrs)
           (prefix (Vector) Vector.)
           (prefix (Stack) Stack.)
           (prefix (IdentTable) IdentTable.))
 
   (define Icid   0) ; cid   : Current Insert Index
-  (define Icit   1) ; cit   : Current IdentTable
+  (define Iits   1) ; its   : IdentTable Stack
   (define Iitdat 2) ; itdat : IdentTable Data
   
   (define (new)
     (let ((git (IdentTable.new 0 'Module '%root)))
-      (vector 0 (Stack.push (Stack.new) git) git)))
+      (vector 0 (Stack.make git) git)))
+
+  ;; cit : Curent IdentTable
+  (define (get-cit ienv)
+    (Stack.top (get ienv Iits)))
+
+  (define (change-cit ienv cit)
+    (Stack.push! (get ienv Iits) cit))
+  (define (recover-cit ienv)
+    (Stack.pop! (get ienv Iits)))
 
   (define (get ienv prop) (Vector.get ienv prop))
   (define (set ienv prop inc) (Vector.set ienv prop inc))
@@ -27,17 +36,20 @@
   (define (insert-cid ienv)
     (let ((id (+ (get ienv Icid) 1)))
       (set ienv Icid id) id))
-  )
+)
 
-
-(import (prefix (IdentTable) IdentTable.)
-        (prefix (ICM-IdentEnvironment) ICM-IdentEnvironment.))
-
-(p (ICM-IdentEnvironment.new))
+;; Module : (module Name ...)
+;; Struct : (struct ...) / (defsturct Name ...)
+;; Func   : (function ...) / (defunc Name ...)
+;; Data   : (define Name ...)
+;; DyVarb : (let Name ...)
+;; StVarb : (dim Name ...)
 
 (library (ICM-IdentAnalysis)
   (export eval init-eval-func)
-  (import (rnrs) (ICM-AnalysisBase)
+  (import (rnrs) (ICM-AnalysisBase) (Output)
+          (prefix (ICM-IdentEnvironment) IEnv.)
+          (prefix (IdentTable) ITab.)
           (prefix (HashTable) HashTable.)
           (prefix (List) List.))
 
@@ -46,18 +58,29 @@
 
   (define (.do code env)
     (List.for-each code (lambda (x) (do-eval get-eval-func x env))))
+  (define (.insert ident env type)
+    (ITab.insert! (cit env) ident type (IEnv.insert-cid env)))
+  (define (.insert-change ident do-list env type)
+    (IEnv.change-cit env (.insert ident env type))
+    (.do do-list env)
+    (IEnv.recover-cit env))
+  
   (define (.define code env)
-    code)
+    (.insert (car code) env 'Data))
   (define (.defunc code env)
-    code)
+    (.insert (car code) env 'Func))
   (define (.module code env)
-    code)
+    (.insert-change (car code) (cdr code) env 'Module))
   (define (.dim code env)
-    code)
+    (.insert (car code) env 'StVarb))
   (define (.restrict code env)
-    code)
+    (.insert (car code) env 'DyVarb))
   (define (.defstruct code env)
-    code)
+    (.insert-change (car code) (cdr code) env 'Struct))
+
+  ;; cit : Current IdentTable
+  (define cit IEnv.get-cit)
+  
   (define (get-eval-func sym)
     (HashTable.get
      eval-func-map
@@ -74,13 +97,16 @@
     (HashTable.insert! eval-func-map 'defunc    .defunc)
     (HashTable.insert! eval-func-map 'module    .module)
     (HashTable.insert! eval-func-map 'dim       .dim)
-    (HashTable.insert! eval-func-map 'defstruct .defstruct)
-    (HashTable.insert! eval-func-map 'restrict  .restrict))
+    (HashTable.insert! eval-func-map 'restrict  .restrict)
+    (HashTable.insert! eval-func-map 'defstruct .defstruct))
 
   )
 
-(import (prefix (ICM-IdentAnalysis) ICM-IdentAnalysis.))
+(import (prefix (ICM-IdentAnalysis) ICM-IdentAnalysis.)
+        (prefix (ICM-IdentEnvironment) ICM-IdentEnvironment.))
+
 (ICM-IdentAnalysis.init-eval-func)
+(define genv (ICM-IdentEnvironment.new))
 
 (define testcode
   '(do (define a)
@@ -89,6 +115,6 @@
      (defstruct B (dim a) (dim b) (define c))
      (dim c)))
 
-(define genv (ICM-IdentEnvironment.new))
+(ICM-IdentAnalysis.eval testcode genv)
+(p (ICM-IdentEnvironment.get-cit genv))
 
-(p (ICM-IdentAnalysis.eval testcode genv))

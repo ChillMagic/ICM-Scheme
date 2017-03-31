@@ -85,9 +85,10 @@
                  vector)))
 
 (library (Stack)
-  (export new push push! pop pop!)
+  (export new make top push push! pop pop!)
   (import (rnrs))
   (define (new) (vector 'stack (list)))
+  (define (make . args) (vector 'stack (reverse args)))
   (define (get-dat stack)
     (vector-ref stack 1))
   (define (set-dat stack dat)
@@ -106,7 +107,7 @@
       (set-dat stack (cdr (get-dat stack))) r)))
 
 (library (HashTable)
-  (export new is? size entries keys values insert!
+  (export new is? size entries keys values insert! include?
           get set get! for-each for-each-with-inter for-sort-each)
   (import (except (rnrs) values for-each)
           (prefix (Vector) Vector.))
@@ -128,6 +129,7 @@
   (define (get! hashtable type default)
     (get hashtable type
          (set hashtable type (default))))
+  (define include? hashtable-contains?)
   (define (for-each hashtable func)
     (let ((size (size hashtable))
           (keys (keys hashtable))
