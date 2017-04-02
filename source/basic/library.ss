@@ -30,7 +30,9 @@
 
 (library (List)
   (export is? make + get empty? reverse
-          push-back push-front pop-front for-each for-each-with-inter)
+          push-back push-front pop-front pop-back
+          ->Vector
+          for-each for-each-with-inter)
   (import (except (rnrs) + length for-each)
           (prefix (rnrs) rnrs.))
   (define is? list?)
@@ -42,6 +44,8 @@
   (define (push-back lst elt) (+ lst (list elt)))
   (define (push-front lst elt) (+ (list elt) lst))
   (define (pop-front lst) (cdr lst))
+  (define (pop-back lst) (reverse (cdr (reverse lst))))
+  (define ->Vector list->vector)
   (define (for-each lst func) (rnrs.for-each func lst) 'nil)
   (define (for-each-with-inter lst elt-func int-func)
     (if (not (null? lst))
@@ -85,7 +89,7 @@
                  vector)))
 
 (library (Stack)
-  (export new make top push push! pop pop!)
+  (export new make top push push! pop pop! get-dat)
   (import (rnrs))
   (define (new) (vector 'stack (list)))
   (define (make . args) (vector 'stack (reverse args)))

@@ -1,26 +1,25 @@
-; ICM on Scheme
-; main.ss
-; Author : Chill
+;; ICM on Scheme
+;; main.ss
+;; Author : Chill
 
-; Load
+;; Load
 
 (load-relative "load.ss")
 (load-relative "common/identanalysis.ss")
 
 (import (prefix (ToStringFormat) ToStringFormat.))
 
-; Main
-(println (expr-eval `(Console.p "ss") gfunc))
+;; Main
+(p (expr-eval '(Console.println (? T 5 6)) gfunc))
 
-;(define ConvertTypeMap (HashTable.new))
+(exit)
 
-;(Convert.!-> ConvertTypeMap `String `Number string->number)
-;(Convert.!-> ConvertTypeMap `Number `String number->string)
-;(p ((Convert.-> ConvertTypeMap `Number `String) 5))
+;;(define ConvertTypeMap (HashTable.new))
 
-;(import (prefix (ToStringFormat) ToStringFormat.))
+;;(Convert.!-> ConvertTypeMap `String `Number string->number)
+;;(Convert.!-> ConvertTypeMap `Number `String number->string)
+;;(p ((Convert.-> ConvertTypeMap `Number `String) 5))
 
-;(println (ToStringFormat.to-string (vector 1 2 3)))
 
 (define GTable (HashTable.new))
 
@@ -41,18 +40,18 @@
 (insert-gtable! 'Console 'println println)
 (insert-gtable! 'Console 'p p)
 
-;(p GTable)
+;;(p GTable)
 
 (define (print-gtable)
   (println "{")
   (HashTable.for-each
-    GTable
-    (lambda (k v)
-      (println
-        "  "
-        (ToStringFormat.to-pformat k)
-        " => "
-        (ToStringFormat.to-pformat v))))
+   GTable
+   (lambda (k v)
+     (println
+      "  "
+      (ToStringFormat.to-pformat k)
+      " => "
+      (ToStringFormat.to-pformat v))))
   (println "}"))
 
 (print-gtable)

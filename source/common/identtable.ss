@@ -6,7 +6,7 @@
 (load-relative "analysisbase.ss")
 
 (library (IdentTable)
-  (export new get-type get-name get-index get-table insert! print)
+  (export new get-type get-name get-index get-table insert! print print-table)
   (import (rnrs)
           (prefix (Vector) Vector.)
           (prefix (HashTable) HashTable.))
@@ -58,8 +58,10 @@
            (display "}"))
           (else (display e))))
   (define (print identtable)
+    (print-table (get-table identtable)))
+  (define (print-table identtable-table)
     (HashTable.for-sort-each-with-inter
-     (get-table identtable)
+     identtable-table
      Vector.symbol-sort
      (lambda (k v) (p-in-identtable v))
      newline))
