@@ -26,6 +26,7 @@
 (library (FuncPara-Analysis)
   (export eval)
   (import (rnrs)
+          (ICM-AnalysisBase)
           (prefix (FuncParaTable) FPT.))
   
   ;; para-code -> argstable
@@ -41,7 +42,11 @@
 
   (define (eval-base item paratable)
     (cond ((list? item)
-           (cond (#t)))
+           (let ((p (pattern item)))
+             (cond ((equal? p '(ident)))
+                   ((equal? p '(ident : ident)))
+                   ((equal? p '(ident : ident ...)))
+                   (else (errors)))))
           ((symbol? item)
            (FPT.insert paratable item 'Vary #f))
           (else (make-error))))
@@ -49,22 +54,3 @@
   (define (errors)
     (error #f "Function parameter syntax error."))
   )
-
-(define (pattern-type e)
-  (cond ((symbol? e)
-         (cond ((symbol=? e 'list) 'list)
-               ((symbol=? e ':) ':)
-               ((symbol=? e '...) '...)
-               (else 'ident)))
-        ((list? e) (pattern e))
-        (else 'data)))
-
-(define (pattern code)
-  (let ((r (make-vector (length code))) (i 0))
-    (for-each
-     (lambda (e)
-       (vector-set! r i (pattern-type e))
-       (set! i (+ i 1)))
-     code) r))
-
-(p (pattern '((list x : Int))))
