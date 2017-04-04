@@ -1,9 +1,9 @@
-; ICM on Scheme
-; analysisbase.ss
-; Author : Chill
+;; ICM on Scheme
+;; analysisbase.ss
+;; Author : Chill
 
 (library (ICM-AnalysisBase)
-  (export do-eval pattern)
+  (export do-eval pattern pattern-once)
   (import (rnrs))
   (define (do-eval sfmap-func code env)
     (if (list? code)
@@ -14,14 +14,25 @@
                      (display code)
                      (display ".\n")))) code))
   (define (pattern code)
-    (cond ((symbol? code)
-           (cond ((symbol=? code 'list) 'list)
-                 ((symbol=? code ':) ':)
-                 ((symbol=? code '...) '...)
-                 (else 'ident)))
-          ((list? code)
-           (let ((r '()))
-             (for-each
-              (lambda (e)
-                (set! r (append r (list (pattern e))))) code) r))
-          (else 'data))))
+    (pattern-base pattern code))
+  (define (pattern-once code)
+    (pattern-base pattern-base2 code))
+  (define (pattern-symbol code)
+    (cond ((symbol=? code 'list) 'list)
+          ((symbol=? code ':) ':)
+          ((symbol=? code '...) '...)
+          (else 'ident)))
+  (define (pattern-list fpattern code)
+    (let ((r '()))
+      (for-each
+       (lambda (e)
+         (set! r (append r (list (fpattern e))))) code) r))
+  (define (pattern-base fpattern code)
+    (cond ((symbol? code) (pattern-symbol code))
+          ((list? code) (pattern-list fpattern code))
+          (else 'data)))
+  (define (pattern-base2 code)
+    (cond ((symbol? code) (pattern-symbol code))
+          ((list? code) 'expr)
+          (else 'data)))
+  )
