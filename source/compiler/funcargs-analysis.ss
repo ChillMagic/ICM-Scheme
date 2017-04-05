@@ -21,7 +21,12 @@
   )
 
 ;; Function Parameters:
-;; [<{(i <: Type <...>>)|i}>*]
+;; texpr   := ident | expr
+;; spbexpr := (ident : texpr) | ident
+;; spaexpr := (ident : texpr ...) | (... : texpr) | ...
+;; spexpr  := [<pbexpr>* <paexpr>]
+;; srexpr  := texpr
+;; sexpr   := spexpr -> srexpr
 
 (library (FuncPara-Analysis)
   (export eval)
@@ -44,12 +49,15 @@
     (let ((p (pattern-once item)))
       (cond ((equal? p 'ident)
              (FPT.insert! paratable item 'Vary #f))
-            ((equal? p '(ident : ident))
+            ((or (equal? p '(ident : ident))
+                 (equal? p '(ident : expr)))
              (FPT.insert! paratable (car item) (caddr item) #f))
-            ((equal? p '(ident))
-             (FPT.insert! paratable (car item) 'Vary #f))
-            ((and last? (equal? p '(ident : ident ...)))
-             (FPT.insert! paratable (car item) (caddr item) #t))
+            ((and last? (or (equal? p '(ident : ident ...))
+                            (equal? p '(ident : expr ...)))
+             (FPT.insert! paratable (car item) (caddr item) #t)))
+            ((and last? (or (equal? p '(... : ident))
+                            (equal? p '(... : expr)))
+             (FPT.insert! paratable (car item) (caddr item) #t)))
             ((and last? (equal? p '...))
              (FPT.insert! paratable '... 'Vary #t))
             (else (errors)))))
@@ -58,4 +66,4 @@
   )
 
 (import (prefix (FuncPara-Analysis) FuncPara-Analysis.))
-(p (FuncPara-Analysis.eval '((a : Int) x y ...)))
+(p (FuncPara-Analysis.eval '((c : N) (a : (U Int Number)) x y (... : x))))

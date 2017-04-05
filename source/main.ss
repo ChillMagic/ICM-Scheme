@@ -71,5 +71,4 @@
      (dim c)))
 
 (ICM-IdentAnalysis.eval testcode gienv)
-
 (IdentTable.print (ICM-IdentEnvironment.get-cit gienv))

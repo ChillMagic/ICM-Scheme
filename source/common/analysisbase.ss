@@ -5,6 +5,7 @@
 (library (ICM-AnalysisBase)
   (export do-eval pattern pattern-once)
   (import (rnrs))
+  ;; Do Eval
   (define (do-eval sfmap-func code env)
     (if (list? code)
         (let ((f (car code)))
@@ -13,6 +14,7 @@
               (begin (display "Syntax Error for ")
                      (display code)
                      (display ".\n")))) code))
+  ;; Pattern
   (define (pattern code)
     (pattern-base pattern code))
   (define (pattern-once code)
