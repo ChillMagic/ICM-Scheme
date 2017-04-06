@@ -26,5 +26,4 @@
   (.define LOADED_LOAD)
   (.define gfunc (HashTable.new))
   (GlobalFunc.init gfunc)
-  (init-eval-func)
 )

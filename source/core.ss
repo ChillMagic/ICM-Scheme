@@ -6,7 +6,7 @@
 (load-relative "common/analysisbase.ss")
 
 (library (ICM-Core)
-  (export expr-eval if-expr init-eval-func)
+  (export expr-eval if-expr)
   (import (rnrs) (Output) (ICM-AnalysisBase)
           (prefix (Symbol) Symbol.)
           (prefix (HashTable) HashTable.)
@@ -16,52 +16,60 @@
   (define-syntax if-expr
     (syntax-rules ()
       ((_ env b-expr f-expr l-expr e-expr)
-       (let ((b-value (expr-eval b-expr env)))
-         (cond ((Symbol.=? b-value `T) (expr-eval f-expr env))
-               ((Symbol.=? b-value `F) (expr-eval l-expr env))
+       (let ((b-value (expr-evalf b-expr env)))
+         (cond ((Symbol.=? b-value 'T) (expr-evalf f-expr env))
+               ((Symbol.=? b-value 'F) (expr-evalf l-expr env))
                (else e-expr))))))
 
   (define (errors) (display "Error Occur.\n") `nil)
 
   ;; eval
   (define (expr-eval code env)
-    (do-eval get-eval-func code env))
+    (when (not (procedure? expr-evalf))
+          (init-eval-func (make-eq-hashtable)))
+    (expr-evalf code env))
+  
+  (define expr-evalf)
 
-  (define eval-func-map)
-  (define (get-eval-func sym)
-    (HashTable.get eval-func-map sym
-                   (lambda (code env) (expr-fcall sym code env))))
-  (define (init-eval-func)
-    (set! eval-func-map (make-eq-hashtable))
-    (HashTable.insert! eval-func-map 'do        expr-do       )
-    (HashTable.insert! eval-func-map '?         expr-?        )
-    (HashTable.insert! eval-func-map 'if        expr-if       )
-    (HashTable.insert! eval-func-map 'loop      expr-loop     )
-    (HashTable.insert! eval-func-map 'while     expr-while    )
-    (HashTable.insert! eval-func-map 'for       expr-for      )
-    (HashTable.insert! eval-func-map 'let       expr-let      )
-    (HashTable.insert! eval-func-map 'set       expr-set      )
-    (HashTable.insert! eval-func-map 'cpy       expr-cpy      )
-    (HashTable.insert! eval-func-map 'ref       expr-ref      )
-    (HashTable.insert! eval-func-map 'dim       expr-dim      )
-    (HashTable.insert! eval-func-map 'restrict  expr-restrict )
-    (HashTable.insert! eval-func-map 'define    expr-define   )
-    (HashTable.insert! eval-func-map 'defunc    expr-defunc   )
-    (HashTable.insert! eval-func-map 'defstruct expr-defstruct)
-    (HashTable.insert! eval-func-map 'function  expr-function )
-    (HashTable.insert! eval-func-map 'struct    expr-struct   ))
+  (define (init-eval-func efm) ; efm : Eval Func Map
+    (HashTable.insert! efm 'do        expr-do       )
+    (HashTable.insert! efm '?         expr-?        )
+    (HashTable.insert! efm 'if        expr-if       )
+    (HashTable.insert! efm 'loop      expr-loop     )
+    (HashTable.insert! efm 'while     expr-while    )
+    (HashTable.insert! efm 'for       expr-for      )
+    (HashTable.insert! efm 'let       expr-let      )
+    (HashTable.insert! efm 'set       expr-set      )
+    (HashTable.insert! efm 'cpy       expr-cpy      )
+    (HashTable.insert! efm 'ref       expr-ref      )
+    (HashTable.insert! efm 'dim       expr-dim      )
+    (HashTable.insert! efm 'restrict  expr-restrict )
+    (HashTable.insert! efm 'define    expr-define   )
+    (HashTable.insert! efm 'defunc    expr-defunc   )
+    (HashTable.insert! efm 'defstruct expr-defstruct)
+    (HashTable.insert! efm 'function  expr-function )
+    (HashTable.insert! efm 'struct    expr-struct   )
+    (set! expr-evalf
+          (lambda (code env)
+            (do-execute
+             (lambda (sym)
+               (HashTable.get
+                efm
+                sym
+                (lambda (code env) (expr-fcall sym code env))))
+             code env))))
 
   (define (expr-evals code env)
     (let loop ((lst code) (rlist `()))
       (if (null? lst)
           rlist
-          (loop (cdr lst) (List.push-back rlist (expr-eval (car lst) env))))))
+          (loop (cdr lst) (List.push-back rlist (expr-evalf (car lst) env))))))
 
   ;; (fexpr <sexpr ...>)
   (define (expr-fcall fexpr code env)
     (GlobalFunc.call
      env
-     (expr-eval fexpr env)
+     (expr-evalf fexpr env)
      (expr-evals code env)
      (lambda (s)
        (display "Error to find Identifer '")
@@ -76,7 +84,7 @@
     (let loop ((lst code) (last `nil))
       (if (null? lst)
           last
-          (loop (cdr lst) (expr-eval (car lst) env)))))
+          (loop (cdr lst) (expr-evalf (car lst) env)))))
 
   ;; (? bexpr sexpr1 <sexpr2>)
   (define (expr-? code env)
@@ -149,7 +157,7 @@
     code
     )
 
-  ;; (defunc I [<(I <: Type>)>*] <-> Type>
+  ;; (defunc ident [<(ident : texpr)|ident>* <(ident : texpr ...)|(... : texpr)|...>] <-> texpr>
   ;;   sexpr ...
   ;; )
   (define (expr-defunc code env)

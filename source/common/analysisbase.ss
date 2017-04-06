@@ -3,10 +3,10 @@
 ;; Author : Chill
 
 (library (ICM-AnalysisBase)
-  (export do-eval pattern pattern-once)
+  (export do-eval do-execute pattern pattern-once)
   (import (rnrs))
-  ;; Do Eval
-  (define (do-eval sfmap-func code env)
+  ;; Do Execute
+  (define (do-execute sfmap-func code env)
     (if (list? code)
         (let ((f (car code)))
           (if (symbol? f)
@@ -14,6 +14,8 @@
               (begin (display "Syntax Error for ")
                      (display code)
                      (display ".\n")))) code))
+  (define do-eval do-execute) ; Will be deleted.
+  
   ;; Pattern
   (define (pattern code)
     (pattern-base pattern code))

@@ -66,4 +66,4 @@
   )
 
 (import (prefix (FuncPara-Analysis) FuncPara-Analysis.))
-(p (FuncPara-Analysis.eval '((c : N) (a : (U Int Number)) x y (... : x))))
+(p (FuncPara-Analysis.eval '(x y z)))
