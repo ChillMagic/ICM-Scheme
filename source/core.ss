@@ -49,15 +49,10 @@
     (HashTable.insert! efm 'defstruct expr-defstruct)
     (HashTable.insert! efm 'function  expr-function )
     (HashTable.insert! efm 'struct    expr-struct   )
-    (set! expr-evalf
-          (lambda (code env)
-            (do-execute
-             (lambda (sym)
-               (HashTable.get
-                efm
-                sym
-                (lambda (code env) (expr-fcall sym code env))))
-             code env))))
+    (let ((f (lambda (sym)
+               (HashTable.get efm sym
+                (lambda (code env) (expr-fcall sym code env))))))
+      (set! expr-evalf (lambda (code env) (do-execute f code env)))))
 
   (define (expr-evals code env)
     (let loop ((lst code) (rlist `()))
